@@ -1,5 +1,4 @@
-# tallyBook
-# 简易记账本
+# TallyBook - 简易记账本
 
 ## 查看项目
 可直接下载zip或clone git repo并使用local websever打开index.html文件查看
