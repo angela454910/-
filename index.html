@@ -17,7 +17,7 @@
           <p class="summary__label">Month</p>
           <p class="summary__value">
             <select name="months" id="month-selector">
-              <option value="">please select a month</option>
+              <option value="">total</option>
               <option value="Jan">1月</option>
               <option value="Feb">2月</option>
               <option value="Mar">3月</option>
@@ -61,12 +61,17 @@
       </div>
 
       <div class="operation operation--addMov">
-        <h2>Add New</h2>
+        <h2>添加新的账单</h2>
         <form class="form form--add">
           <label class="form__label">Type</label>
-          <input type="number" class="form__input mov__input--type" required />
+          <select class="form__input input--type">
+            <option value="0">0 -- 支出</option>
+            <option value="1">1 -- 收入</option>
+          </select>
           <label class="form__label">Category</label>
-          <input type="text" class="form__input mov__input--category" />
+          <select class="input--category">
+            <option value="">无</option>
+          </select>
           <label class="form__label">Amount</label>
           <input
             type="number"
@@ -83,11 +88,10 @@
           <label class="form__label">Id</label>
           <input type="text" class="form__input category__input--id" required />
           <label class="form__label">Type</label>
-          <input
-            type="number"
-            class="form__input category__input--type"
-            required
-          />
+          <select class="form__input input--type">
+            <option value="0">0 -- 支出</option>
+            <option value="1">1 -- 收入</option>
+          </select>
           <label class="form__label">Name</label>
           <input
             type="text"

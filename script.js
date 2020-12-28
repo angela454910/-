@@ -81,12 +81,11 @@ const containerMovements = document.querySelector(".movements");
 const btnAddMov = document.querySelector(".form__btn--addMov");
 const btnAddCategory = document.querySelector(".form__btn--addCategory");
 const monthSelector = document.querySelector("#month-selector");
+const typeSelector = document.querySelector(".input--type");
 
-const movInputType = document.querySelector(".mov__input--type");
-const movInputCategory = document.querySelector(".mov__input--category");
+const movInputCategory = document.querySelector(".input--category");
 const movInputAmount = document.querySelector(".mov__input--amount");
 const cateInputId = document.querySelector(".category__input--id");
-const cateInputType = document.querySelector(".category__input--type");
 const cateInputName = document.querySelector(".category__input--name");
 
 const msgEl = document.querySelector(".msg");
@@ -173,10 +172,24 @@ const displaySummary = function (data) {
   labelSumOut.textContent = `${Math.abs(outputs)} ￥`;
 };
 
+// Operation
+const createCategoryList = (cate) => {
+  const html = `<option value="${cate.id}">${cate.name}</option>`;
+  movInputCategory.insertAdjacentHTML("afterbegin", html);
+};
+
+const displayCategory = (data) => {
+  category.forEach((el) => {
+    createCategoryList(el);
+  });
+};
+displayCategory(category);
+
 btnAddCategory.addEventListener("click", function (e) {
   e.preventDefault();
   const id = cateInputId.value.trim();
-  const type = parseInt(cateInputType.value);
+  const index = typeSelector.selectedIndex;
+  const type = parseInt(typeSelector.options[index].value);
   const name = cateInputName.value.trim();
   if (!id || !type.toString() || !name) {
     displayMsg("请填写id, type, name", "error");
@@ -189,8 +202,9 @@ btnAddCategory.addEventListener("click", function (e) {
     displayMsg(`新的标签已创建 -- ${name}`, "success");
     cateInputId.value = "";
     cateInputName.value = "";
-    cateInputType.value = "";
+    typeSelector.value = "0";
     topFunction();
+    displayCategory(category);
   } else {
     displayMsg("该标签已存在", "error");
     topFunction();
@@ -209,30 +223,43 @@ fetch("./bill.csv")
       const index = monthSelector.selectedIndex;
       const month = monthMap[monthSelector.options[index].value];
       // console.log(month);
-      const selectedData = movements.filter(
-        (element) => new Date(element.time).getMonth() + 1 === month
-      );
-      displayMovements(selectedData);
-      displaySummary(selectedData);
-      msg.style.opacity = 0;
+      if (month) {
+        const selectedData = movements.filter(
+          (element) => new Date(element.time).getMonth() + 1 === month
+        );
+        displayMovements(selectedData);
+        displaySummary(selectedData);
+        msgEl.style.opacity = 0;
+      } else {
+        displayMovements(movements);
+        displaySummary(movements);
+      }
     });
 
     // operation
     btnAddMov.addEventListener("click", function (e) {
       e.preventDefault();
-      const type = parseInt(movInputType.value);
-      const category = movInputCategory.value.trim();
+      const typeIndex = typeSelector.selectedIndex;
+      const type = parseInt(typeSelector.options[typeIndex].value);
+      const cateIndex = movInputCategory.selectedIndex;
+      const category = movInputCategory.options[cateIndex].value;
       const amount = parseInt(movInputAmount.value);
       if (!type.toString() || !amount) {
         displayMsg("请添加type, amount", "error");
       } else {
-        movements.push({ type, time: new Date().getTime(), category, amount });
+        movements.push({
+          type,
+          time: new Date().getTime(),
+          category,
+          amount: type === 1 ? amount : -amount,
+        });
         displayMovements(movements);
         displaySummary(movements);
         displayMsg("添加成功", "success");
-        movInputType.value = "";
+        typeSelector.value = "0";
         movInputCategory.value = "";
         movInputAmount.value = "";
+        console.log(movements);
       }
     });
   })
