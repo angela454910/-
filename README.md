@@ -2,7 +2,8 @@
 # 简易记账本
 
 [Demo](https://angela454910.github.io/tallyBook/)
-（如果无法打开的话可直接下载zip或clone git repo并打开其中的index.html查看）
+（如果无法打开或读取文件错误的话可直接下载zip或clone git repo并使用local websever打开index.html文件查看
+vs code可直接使用live server -> go live查看）
 
 ## 基础功能：
 - 首页加载bill.csv所有内容
