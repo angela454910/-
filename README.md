@@ -1,9 +1,11 @@
 # tallyBook
 # 简易记账本
 
-[Demo](https://angela454910.github.io/tallyBook/)
-（如果无法打开或读取文件错误的话可直接下载zip或clone git repo并使用local websever打开index.html文件查看
-vs code可直接使用live server -> go live查看）
+## 查看项目
+可直接下载zip或clone git repo并使用local websever打开index.html文件查看
+
+vs code可直接使用live server -> go live查看
+（因为csv文件被放在本地文件夹中，浏览器无法直接加载）
 
 ## 基础功能：
 - 首页加载bill.csv所有内容
