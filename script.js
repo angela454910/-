@@ -82,6 +82,7 @@ const btnAddMov = document.querySelector(".form__btn--addMov");
 const btnAddCategory = document.querySelector(".form__btn--addCategory");
 const monthSelector = document.querySelector("#month-selector");
 const typeSelector = document.querySelector(".input--type");
+const cateSelector = document.querySelector(".category--selector");
 
 const movInputCategory = document.querySelector(".input--category");
 const movInputAmount = document.querySelector(".mov__input--amount");
@@ -176,6 +177,7 @@ const displaySummary = function (data) {
 const createCategoryList = (cate) => {
   const html = `<option value="${cate.id}">${cate.name}</option>`;
   movInputCategory.insertAdjacentHTML("afterbegin", html);
+  cateSelector.insertAdjacentHTML("afterbegin", html);
 };
 
 const displayCategory = (data) => {
@@ -224,12 +226,25 @@ fetch("./bill.csv")
       const month = monthMap[monthSelector.options[index].value];
       // console.log(month);
       if (month) {
-        const selectedData = movements.filter(
+        let selectedData = movements.filter(
           (element) => new Date(element.time).getMonth() + 1 === month
         );
+        console.log(selectedData);
         displayMovements(selectedData);
         displaySummary(selectedData);
         msgEl.style.opacity = 0;
+        cateSelector.addEventListener("change", function () {
+          const cateIndex = cateSelector.selectedIndex;
+          const category = cateSelector.options[cateIndex].value;
+          if (category) {
+            selectedData = selectedData.filter(
+              (el) => el.category === category
+            );
+            displayMovements(selectedData);
+            displaySummary(selectedData);
+            console.log(selectedData);
+          }
+        });
       } else {
         displayMovements(movements);
         displaySummary(movements);
