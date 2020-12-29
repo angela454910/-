@@ -243,7 +243,7 @@ fetch("./bill.csv")
       const type = parseInt(typeSelector.options[typeIndex].value);
       const cateIndex = movInputCategory.selectedIndex;
       const category = movInputCategory.options[cateIndex].value;
-      const amount = parseInt(movInputAmount.value);
+      const amount = Math.abs(parseInt(movInputAmount.value));
       if (!type.toString() || !amount) {
         displayMsg("请添加type, amount", "error");
       } else {
